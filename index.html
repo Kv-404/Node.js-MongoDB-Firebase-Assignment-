@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment 1 & 2 - Simple Test Page</title>
+</head>
+<body>
+    <h1>Assignment 1 & 2 Coursework Portal (Simple Mode)</h1>
+    <p>This is a plain HTML test page with no styling. Use it to verify that all JS functionality runs correctly.</p>
+    
+    <hr>
+    
+    <h2>Assignment 1: Promises (Recruitment System)</h2>
+    
+    <h3>Question 1: Coding Assessment</h3>
+    <div>
+        <label>Marks (comma-separated): </label>
+        <input type="text" id="c-marks" value="80, 75, 90, 85">
+        <label>Cutoff: </label>
+        <input type="number" id="c-cutoff" value="70">
+        <button onclick="runCodingCheck()">Check Coding Score</button>
+        <p id="c-result"></p>
+    </div>
+
+    <h3>Question 2: Technical Interview</h3>
+    <div>
+        <label>Marks (comma-separated): </label>
+        <input type="text" id="t-marks" value="70, 80, 75, 85">
+        <label>Cutoff: </label>
+        <input type="number" id="t-cutoff" value="70">
+        <button onclick="runTechnicalCheck()">Check Technical Score</button>
+        <p id="t-result"></p>
+    </div>
+
+    <h3>Question 3: Final Selection Review</h3>
+    <div>
+        <p>Coding Average: <span id="summary-coding">Not completed</span></p>
+        <p>Technical Average: <span id="summary-technical">Not completed</span></p>
+        <label>Final Cutoff: </label>
+        <input type="number" id="f-cutoff" value="75">
+        <button onclick="runFinalCheck()">Check Final Selection</button>
+        <button onclick="resetState()">Reset Averages</button>
+        <p id="f-result"></p>
+    </div>
+
+    <hr>
+
+    <h2>Assignment 2: Node.js HTTP Servers</h2>
+    <p>Start each server in your terminal first (e.g. <code>node "Assignment 2/basicServer.js"</code>) and click the links below to test the endpoints:</p>
+    
+    <h3>1. Basic HTTP Server (basicServer.js)</h3>
+    <ul>
+        <li><a href="http://localhost:3000/" target="_blank">Test Welcome Route (http://localhost:3000/)</a></li>
+    </ul>
+
+    <h3>2. HTML Response Server (htmlServer.js)</h3>
+    <ul>
+        <li><a href="http://localhost:3000/" target="_blank">Test HTML Page Route (http://localhost:3000/)</a></li>
+    </ul>
+
+    <h3>3. Student JSON API (studentJsonApi.js)</h3>
+    <ul>
+        <li><a href="http://localhost:3000/student" target="_blank">Test JSON API Route (http://localhost:3000/student)</a></li>
+        <li><a href="http://localhost:3000/random" target="_blank">Test 404 Route (http://localhost:3000/random)</a></li>
+    </ul>
+
+    <h3>4. Route Handling Server (routeHandlingServer.js)</h3>
+    <ul>
+        <li><a href="http://localhost:3000/" target="_blank">Home (/)</a></li>
+        <li><a href="http://localhost:3000/about" target="_blank">About (/about)</a></li>
+        <li><a href="http://localhost:3000/contact" target="_blank">Contact (/contact)</a></li>
+        <li><a href="http://localhost:3000/services" target="_blank">Services (/services)</a></li>
+        <li><a href="http://localhost:3000/invalid" target="_blank">Invalid Route 404 (/invalid)</a></li>
+    </ul>
+
+    <h3>5. Personal Portfolio Server (personalPortfolioServer.js)</h3>
+    <ul>
+        <li><a href="http://localhost:3000/" target="_blank">Home (/)</a></li>
+        <li><a href="http://localhost:3000/about" target="_blank">About Me (/about)</a></li>
+        <li><a href="http://localhost:3000/skills" target="_blank">Skills (/skills)</a></li>
+        <li><a href="http://localhost:3000/projects" target="_blank">Projects (/projects)</a></li>
+        <li><a href="http://localhost:3000/contact" target="_blank">Contact (/contact)</a></li>
+        <li><a href="http://localhost:3000/missing-page" target="_blank">Missing Page 404 (/missing-page)</a></li>
+    </ul>
+
+    <script>
+        let codingAverage = null;
+        let technicalAverage = null;
+
+        function parseMarks(input) {
+            return input.split(',').map(m => parseFloat(m.trim())).filter(m => !isNaN(m));
+        }
+
+        function runCodingCheck() {
+            const marksVal = document.getElementById('c-marks').value;
+            const cutoffVal = parseFloat(document.getElementById('c-cutoff').value);
+            const marks = parseMarks(marksVal);
+            const resultBox = document.getElementById('c-result');
+
+            if (marks.length === 0) {
+                resultBox.innerText = 'Error: Enter valid marks!';
+                return;
+            }
+
+            resultBox.innerText = 'Processing coding check... (2 seconds delay)';
+
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const avg = marks.reduce((sum, m) => sum + m, 0) / marks.length;
+                    if (avg >= cutoffVal) resolve(avg);
+                    else reject("Sorry, you have not cleared the Coding Assessment.");
+                }, 2000);
+            })
+            .then(avg => {
+                codingAverage = avg;
+                resultBox.innerText = 'Coding Assessment cleared! Average score: ' + avg.toFixed(2);
+                document.getElementById('summary-coding').innerText = avg.toFixed(2);
+            })
+            .catch(err => {
+                codingAverage = null;
+                resultBox.innerText = 'Rejected: ' + err;
+                document.getElementById('summary-coding').innerText = 'Not completed';
+            });
+        }
+
+        function runTechnicalCheck() {
+            const marksVal = document.getElementById('t-marks').value;
+            const cutoffVal = parseFloat(document.getElementById('t-cutoff').value);
+            const marks = parseMarks(marksVal);
+            const resultBox = document.getElementById('t-result');
+
+            if (marks.length === 0) {
+                resultBox.innerText = 'Error: Enter valid marks!';
+                return;
+            }
+
+            resultBox.innerText = 'Processing technical interview check... (2 seconds delay)';
+
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const avg = marks.reduce((sum, m) => sum + m, 0) / marks.length;
+                    if (avg >= cutoffVal) resolve(avg);
+                    else reject("Sorry, you have not cleared the Technical Interview.");
+                }, 2000);
+            })
+            .then(avg => {
+                technicalAverage = avg;
+                resultBox.innerText = 'Technical Interview cleared! Average score: ' + avg.toFixed(2);
+                document.getElementById('summary-technical').innerText = avg.toFixed(2);
+            })
+            .catch(err => {
+                technicalAverage = null;
+                resultBox.innerText = 'Rejected: ' + err;
+                document.getElementById('summary-technical').innerText = 'Not completed';
+            });
+        }
+
+        function runFinalCheck() {
+            const resultBox = document.getElementById('f-result');
+            const cutoffVal = parseFloat(document.getElementById('f-cutoff').value);
+
+            if (codingAverage === null || technicalAverage === null) {
+                resultBox.innerText = 'Error: Complete both Coding Assessment and Technical Interview first!';
+                return;
+            }
+
+            resultBox.innerText = 'Processing final selection review... (2 seconds delay)';
+
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const finalAvg = (codingAverage + technicalAverage) / 2;
+                    if (finalAvg >= cutoffVal) resolve(finalAvg);
+                    else reject("Sorry, you have not cleared the final selection cutoff.");
+                }, 2000);
+            })
+            .then(finalAvg => {
+                resultBox.innerText = 'Final Selection cleared! Final average score: ' + finalAvg.toFixed(2);
+            })
+            .catch(err => {
+                resultBox.innerText = 'Rejected: ' + err;
+            });
+        }
+
+        function resetState() {
+            codingAverage = null;
+            technicalAverage = null;
+            document.getElementById('summary-coding').innerText = 'Not completed';
+            document.getElementById('summary-technical').innerText = 'Not completed';
+            document.getElementById('c-result').innerText = '';
+            document.getElementById('t-result').innerText = '';
+            document.getElementById('f-result').innerText = '';
+        }
+    </script>
+</body>
+</html>
