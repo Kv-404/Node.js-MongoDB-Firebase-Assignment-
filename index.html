@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assignment 1 & 2 - Simple Test Page</title>
+    <title>Assignment 1, 2 & 3 - Simple Test Page</title>
 </head>
 <body>
-    <h1>Assignment 1 & 2 Coursework Portal (Simple Mode)</h1>
+    <h1>Assignment 1, 2 & 3 Coursework Portal (Simple Mode)</h1>
     <p>This is a plain HTML test page with no styling. Use it to verify that all JS functionality runs correctly.</p>
     
     <hr>
@@ -81,6 +81,21 @@
         <li><a href="http://localhost:3000/contact" target="_blank">Contact (/contact)</a></li>
         <li><a href="http://localhost:3000/missing-page" target="_blank">Missing Page 404 (/missing-page)</a></li>
     </ul>
+
+    <hr>
+
+    <h2>Assignment 3: Your First Node.js Program & Introduction Program</h2>
+    <p>Run these programs in your terminal to see the output:</p>
+
+    <h3>Task 1: First Node.js Program (app.js)</h3>
+    <p>Command: <code>node "Assignment 3/app.js"</code></p>
+    <button onclick="runApp()">Run app.js (Demo)</button>
+    <pre id="app-output"></pre>
+
+    <h3>Task 2: Introduction Program (introduction.js)</h3>
+    <p>Command: <code>node "Assignment 3/introduction.js"</code></p>
+    <button onclick="runIntro()">Run introduction.js (Demo)</button>
+    <pre id="intro-output"></pre>
 
     <script>
         let codingAverage = null;
@@ -188,6 +203,14 @@
             document.getElementById('c-result').innerText = '';
             document.getElementById('t-result').innerText = '';
             document.getElementById('f-result').innerText = '';
+        }
+
+        function runApp() {
+            document.getElementById('app-output').innerText = 'Hello, Node.js!\nI am learning backend development';
+        }
+
+        function runIntro() {
+            document.getElementById('intro-output').innerText = 'Name: John\nEducation: B.Tech\nCurrent Learning: Node.js\nGoal: Developer';
         }
     </script>
 </body>
