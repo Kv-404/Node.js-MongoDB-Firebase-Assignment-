@@ -1,0 +1,18 @@
+{
+  "name": "assignment-11",
+  "version": "1.0.0",
+  "description": "Assignment 11 - Teacher and student registration using Express, MongoDB and bcrypt",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["express", "mongodb", "mongoose", "bcrypt"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.8.3"
+  }
+}

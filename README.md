@@ -4,7 +4,7 @@ This repository contains a collection of assignments covering various aspects of
 
 ## Coursework Portal
 
-Open `index.html` in your browser for the coursework portal. It has a section for every assignment (1–9): in-page testers for Promises and Node demos, links/commands for the HTTP and Express servers, and create/list/update/delete forms for the MongoDB APIs.
+Open `index.html` in your browser for the coursework portal. It has a section for every assignment (1–11): in-page testers for Promises and Node demos, links/commands for the HTTP and Express servers, MongoDB user APIs, Firestore storage, and teacher/student registration.
 
 ## Assignments Overview
 
@@ -42,6 +42,12 @@ Express + MongoDB + Mongoose app with separate schema, model, and router files. 
 
 ### [Assignment 9](Assignment%209) - Update and Delete Users
 Extends Assignment 8 with `PATCH /api/users/:id` and `DELETE /api/users/:id`, plus error handling for invalid IDs and missing users.
+
+### [Assignment 10](Assignment%2010) - Firebase Firestore
+Express app that validates user data and stores it in a Firestore `users` collection. Needs a Firebase service account file.
+
+### [Assignment 11](Assignment%2011) - Teacher and Student Registration
+Separate teacher and student schemas, models, and routers. Registers both with `bcrypt` password hashing into local MongoDB.
 
 ## Prerequisites
 

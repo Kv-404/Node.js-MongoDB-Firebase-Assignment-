@@ -261,7 +261,7 @@
     <header>
         <div class="wrap">
             <h1>Node.js, MongoDB &amp; Firebase Coursework Portal</h1>
-            <p>Test page for Assignments 1–9. Assignment 1 and 3 run in the browser. For servers, start the matching Node process first, then use the links or testers below.</p>
+            <p>Test page for Assignments 1–11. Assignment 1 and 3 run in the browser. For servers, start the matching Node process first, then use the links or testers below.</p>
         </div>
     </header>
 
@@ -276,6 +276,8 @@
             <a href="#a7">7. Params</a>
             <a href="#a8">8. Mongo Create</a>
             <a href="#a9">9. Mongo Update</a>
+            <a href="#a10">10. Firestore</a>
+            <a href="#a11">11. Register</a>
         </div>
     </nav>
 
@@ -575,6 +577,66 @@ npm start</pre>
             <p class="muted">Error cases: invalid ID returns 400, missing user returns 404.</p>
             <pre id="a9-out" class="out">Response will appear here.</pre>
         </section>
+
+        <section id="a10">
+            <h2>Assignment 10: Store Data in Firebase Firestore</h2>
+            <p>Validates user data, then stores it in a Firestore <code>users</code> collection. Put a Firebase service account at <code>Assignment 10/config/serviceAccount.json</code> first (see the README).</p>
+            <pre class="run">cd "Assignment 10"
+npm start</pre>
+
+            <h3>POST /api/users (valid)</h3>
+            <div class="row">
+                <label for="a10-name">Name</label>
+                <input type="text" id="a10-name" value="Rahul">
+                <label for="a10-email">Email</label>
+                <input type="email" id="a10-email" value="rahul@gmail.com">
+                <label for="a10-age">Age</label>
+                <input type="number" id="a10-age" value="22">
+                <label for="a10-course">Course</label>
+                <input type="text" id="a10-course" value="MCA">
+                <button type="button" onclick="createFirestoreUser()">Store in Firestore</button>
+            </div>
+
+            <h3>Validation error</h3>
+            <button type="button" class="secondary" onclick="createFirestoreUser(true)">Send invalid data (missing name, bad email)</button>
+            <pre id="a10-out" class="out">Response will appear here.</pre>
+        </section>
+
+        <section id="a11">
+            <h2>Assignment 11: Teacher and Student Registration</h2>
+            <p>Separate schemas, models, and routers. Passwords are hashed with bcrypt before MongoDB stores them. Local MongoDB is enough — no Atlas website.</p>
+            <pre class="run">cd "Assignment 11"
+npm start</pre>
+
+            <h3>POST /teacher/register</h3>
+            <div class="row">
+                <label for="a11-tname">Name</label>
+                <input type="text" id="a11-tname" value="Anita Sharma">
+                <label for="a11-temail">Email</label>
+                <input type="email" id="a11-temail" value="anita@college.edu">
+                <label for="a11-tpass">Password</label>
+                <input type="text" id="a11-tpass" value="secret123">
+                <label for="a11-tsubject">Subject</label>
+                <input type="text" id="a11-tsubject" value="Node.js">
+                <button type="button" onclick="registerTeacher()">Register Teacher</button>
+            </div>
+
+            <h3>POST /student/register</h3>
+            <div class="row">
+                <label for="a11-sname">Name</label>
+                <input type="text" id="a11-sname" value="Rahul">
+                <label for="a11-semail">Email</label>
+                <input type="email" id="a11-semail" value="rahul@gmail.com">
+                <label for="a11-spass">Password</label>
+                <input type="text" id="a11-spass" value="secret123">
+                <label for="a11-scourse">Course</label>
+                <input type="text" id="a11-scourse" value="MCA">
+                <label for="a11-sage">Age</label>
+                <input type="number" id="a11-sage" value="22">
+                <button type="button" onclick="registerStudent()">Register Student</button>
+            </div>
+            <pre id="a11-out" class="out">Response will appear here.</pre>
+        </section>
     </main>
 
     <script>
@@ -796,6 +858,68 @@ npm start</pre>
                 box.textContent = res.status + ' ' + res.statusText + '\n' + text;
             } catch (err) {
                 box.textContent = 'Could not reach the server.\nStart Assignment 9 with npm start.\n\n' + err.message;
+            }
+        }
+
+        async function createFirestoreUser(invalid) {
+            const box = document.getElementById('a10-out');
+            const body = invalid
+                ? { name: '', email: 'not-an-email', age: 22, course: 'MCA' }
+                : userPayload('a10');
+            box.textContent = 'Sending POST /api/users ...';
+            try {
+                const res = await fetch('http://localhost:3000/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 10 with npm start (Firebase credentials required).\n\n' + err.message;
+            }
+        }
+
+        async function registerTeacher() {
+            const box = document.getElementById('a11-out');
+            box.textContent = 'Registering teacher...';
+            try {
+                const res = await fetch('http://localhost:3000/teacher/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('a11-tname').value,
+                        email: document.getElementById('a11-temail').value,
+                        password: document.getElementById('a11-tpass').value,
+                        subject: document.getElementById('a11-tsubject').value
+                    })
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 11 with npm start.\n\n' + err.message;
+            }
+        }
+
+        async function registerStudent() {
+            const box = document.getElementById('a11-out');
+            box.textContent = 'Registering student...';
+            try {
+                const res = await fetch('http://localhost:3000/student/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('a11-sname').value,
+                        email: document.getElementById('a11-semail').value,
+                        password: document.getElementById('a11-spass').value,
+                        course: document.getElementById('a11-scourse').value,
+                        age: Number(document.getElementById('a11-sage').value)
+                    })
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 11 with npm start.\n\n' + err.message;
             }
         }
     </script>
