@@ -1,0 +1,18 @@
+{
+  "name": "assignment-6",
+  "version": "1.0.0",
+  "description": "Assignment 6 - Express.js middleware",
+  "main": "routerMiddleware.js",
+  "scripts": {
+    "task1": "node routerMiddleware.js",
+    "task2": "node requestLogger.js",
+    "task3": "node responseTimeLogger.js"
+  },
+  "keywords": ["express", "middleware"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

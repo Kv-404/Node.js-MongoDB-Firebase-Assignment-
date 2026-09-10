@@ -4,7 +4,7 @@ This repository contains a collection of assignments covering various aspects of
 
 ## Coursework Portal
 
-You can open the `index.html` file in your browser to access the Simple Test Page, which provides a UI to interact with some of the tasks from Assignments 1, 2, and 3.
+Open `index.html` in your browser for the coursework portal. It has a section for every assignment (1–9): in-page testers for Promises and Node demos, links/commands for the HTTP and Express servers, and create/list/update/delete forms for the MongoDB APIs.
 
 ## Assignments Overview
 
@@ -24,6 +24,24 @@ Introduction to Node.js, running simple scripts like displaying messages and per
 
 ### [Assignment 4](Assignment%204) - File System Operations CLI
 An interactive Command Line Interface (CLI) application demonstrating the use of the core Node.js `fs` module to perform file operations (create, read, append, rename, clear, delete) dynamically.
+
+### [Assignment 5](Assignment%205) - Express.js Basic Routes
+Express server covering basic routes, dynamic route parameters, query parameters, and request logging.
+
+### [Assignment 6](Assignment%206) - Express.js Middleware
+Three Express apps:
+- Router-level middleware with `routerLogger`
+- Global request logger middleware
+- Response time middleware
+
+### [Assignment 7](Assignment%207) - Route Parameters and Query Parameters
+Three Express apps for `req.params`, `req.query`, and a student profile that uses both.
+
+### [Assignment 8](Assignment%208) - Create and Retrieve Users
+Express + MongoDB + Mongoose app with separate schema, model, and router files. Supports `POST /api/users` and `GET /api/users`.
+
+### [Assignment 9](Assignment%209) - Update and Delete Users
+Extends Assignment 8 with `PATCH /api/users/:id` and `DELETE /api/users/:id`, plus error handling for invalid IDs and missing users.
 
 ## Prerequisites
 

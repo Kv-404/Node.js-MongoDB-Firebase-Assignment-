@@ -1,101 +1,581 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Assignment 1, 2 & 3 - Simple Test Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js, MongoDB &amp; Firebase Assignments</title>
+    <style>
+        :root {
+            --bg: #f4f6f9;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --accent: #2563eb;
+            --accent-dark: #1d4ed8;
+            --header: #0f172a;
+            --ok: #166534;
+            --ok-bg: #dcfce7;
+            --err: #991b1b;
+            --err-bg: #fee2e2;
+            --code: #0f172a;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        header {
+            background: var(--header);
+            color: #f8fafc;
+            padding: 28px 20px 20px;
+        }
+
+        header .wrap,
+        nav .wrap,
+        main {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 1.7rem;
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+        }
+
+        header p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+        }
+
+        nav .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 20px;
+            overflow-x: auto;
+        }
+
+        nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        nav a:hover,
+        nav a:focus-visible {
+            background: #334155;
+            color: #fff;
+            outline: none;
+        }
+
+        main { padding: 24px 20px 64px; }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            margin: 0 0 8px;
+            font-size: 1.35rem;
+        }
+
+        h3 {
+            margin: 20px 0 8px;
+            font-size: 1.05rem;
+        }
+
+        p, li { color: #1e293b; }
+
+        .muted { color: var(--muted); }
+
+        .run {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 12px;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9rem;
+            color: var(--code);
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        label { font-weight: 600; font-size: 0.92rem; }
+
+        input, textarea, select {
+            font: inherit;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            min-width: 0;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        textarea {
+            background: #fff;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        button, .btn {
+            font: inherit;
+            font-weight: 600;
+            border: 0;
+            border-radius: 8px;
+            padding: 8px 14px;
+            background: var(--accent);
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover, .btn:hover { background: var(--accent-dark); }
+
+        button.secondary,
+        .btn.secondary {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        button.secondary:hover,
+        .btn.secondary:hover { background: #cbd5e1; }
+
+        button.danger { background: #dc2626; }
+        button.danger:hover { background: #b91c1c; }
+
+        ul.links { padding-left: 18px; }
+
+        ul.links a { color: var(--accent); }
+
+        .result {
+            min-height: 1.4em;
+            margin: 8px 0 0;
+            font-weight: 600;
+        }
+
+        .result.ok { color: var(--ok); }
+        .result.err { color: var(--err); }
+
+        pre.out {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 48px;
+            margin: 8px 0 0;
+            font-size: 0.88rem;
+        }
+
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .shots figure {
+            margin: 0;
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .shots img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .shots figcaption {
+            padding: 8px 10px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .note {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.2rem; }
+            header p { font-size: 0.92rem; }
+            nav .wrap { flex-wrap: nowrap; }
+            nav a { font-size: 0.82rem; padding: 6px 8px; white-space: nowrap; flex-shrink: 0; }
+            section { padding: 16px; scroll-margin-top: 64px; }
+            input, select, textarea { width: 100%; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Assignment 1, 2 & 3 Coursework Portal (Simple Mode)</h1>
-    <p>This is a plain HTML test page with no styling. Use it to verify that all JS functionality runs correctly.</p>
-    
-    <hr>
-    
-    <h2>Assignment 1: Promises (Recruitment System)</h2>
-    
-    <h3>Question 1: Coding Assessment</h3>
-    <div>
-        <label>Marks (comma-separated): </label>
-        <input type="text" id="c-marks" value="80, 75, 90, 85">
-        <label>Cutoff: </label>
-        <input type="number" id="c-cutoff" value="70">
-        <button onclick="runCodingCheck()">Check Coding Score</button>
-        <p id="c-result"></p>
-    </div>
+    <header>
+        <div class="wrap">
+            <h1>Node.js, MongoDB &amp; Firebase Coursework Portal</h1>
+            <p>Test page for Assignments 1–9. Assignment 1 and 3 run in the browser. For servers, start the matching Node process first, then use the links or testers below.</p>
+        </div>
+    </header>
 
-    <h3>Question 2: Technical Interview</h3>
-    <div>
-        <label>Marks (comma-separated): </label>
-        <input type="text" id="t-marks" value="70, 80, 75, 85">
-        <label>Cutoff: </label>
-        <input type="number" id="t-cutoff" value="70">
-        <button onclick="runTechnicalCheck()">Check Technical Score</button>
-        <p id="t-result"></p>
-    </div>
+    <nav aria-label="Assignments">
+        <div class="wrap">
+            <a href="#a1">1. Promises</a>
+            <a href="#a2">2. HTTP Servers</a>
+            <a href="#a3">3. Node Basics</a>
+            <a href="#a4">4. File System</a>
+            <a href="#a5">5. Express Routes</a>
+            <a href="#a6">6. Middleware</a>
+            <a href="#a7">7. Params</a>
+            <a href="#a8">8. Mongo Create</a>
+            <a href="#a9">9. Mongo Update</a>
+        </div>
+    </nav>
 
-    <h3>Question 3: Final Selection Review</h3>
-    <div>
-        <p>Coding Average: <span id="summary-coding">Not completed</span></p>
-        <p>Technical Average: <span id="summary-technical">Not completed</span></p>
-        <label>Final Cutoff: </label>
-        <input type="number" id="f-cutoff" value="75">
-        <button onclick="runFinalCheck()">Check Final Selection</button>
-        <button onclick="resetState()">Reset Averages</button>
-        <p id="f-result"></p>
-    </div>
+    <main>
+        <section id="a1">
+            <h2>Assignment 1: Promises (Recruitment System)</h2>
+            <p class="muted">Runs entirely in this page. Coding and technical averages are stored for the final selection check.</p>
 
-    <hr>
+            <h3>Question 1: Coding Assessment</h3>
+            <div class="row">
+                <label for="c-marks">Marks (comma-separated)</label>
+                <input type="text" id="c-marks" value="80, 75, 90, 85">
+                <label for="c-cutoff">Cutoff</label>
+                <input type="number" id="c-cutoff" value="70">
+                <button type="button" onclick="runCodingCheck()">Check Coding Score</button>
+            </div>
+            <p id="c-result" class="result"></p>
 
-    <h2>Assignment 2: Node.js HTTP Servers</h2>
-    <p>Start each server in your terminal first (e.g. <code>node "Assignment 2/basicServer.js"</code>) and click the links below to test the endpoints:</p>
-    
-    <h3>1. Basic HTTP Server (basicServer.js)</h3>
-    <ul>
-        <li><a href="http://localhost:3000/" target="_blank">Test Welcome Route (http://localhost:3000/)</a></li>
-    </ul>
+            <h3>Question 2: Technical Interview</h3>
+            <div class="row">
+                <label for="t-marks">Marks (comma-separated)</label>
+                <input type="text" id="t-marks" value="70, 80, 75, 85">
+                <label for="t-cutoff">Cutoff</label>
+                <input type="number" id="t-cutoff" value="70">
+                <button type="button" onclick="runTechnicalCheck()">Check Technical Score</button>
+            </div>
+            <p id="t-result" class="result"></p>
 
-    <h3>2. HTML Response Server (htmlServer.js)</h3>
-    <ul>
-        <li><a href="http://localhost:3000/" target="_blank">Test HTML Page Route (http://localhost:3000/)</a></li>
-    </ul>
+            <h3>Question 3: Final Selection Review</h3>
+            <p>Coding Average: <strong id="summary-coding">Not completed</strong></p>
+            <p>Technical Average: <strong id="summary-technical">Not completed</strong></p>
+            <div class="row">
+                <label for="f-cutoff">Final Cutoff</label>
+                <input type="number" id="f-cutoff" value="75">
+                <button type="button" onclick="runFinalCheck()">Check Final Selection</button>
+                <button type="button" class="secondary" onclick="resetState()">Reset Averages</button>
+            </div>
+            <p id="f-result" class="result"></p>
+        </section>
 
-    <h3>3. Student JSON API (studentJsonApi.js)</h3>
-    <ul>
-        <li><a href="http://localhost:3000/student" target="_blank">Test JSON API Route (http://localhost:3000/student)</a></li>
-        <li><a href="http://localhost:3000/random" target="_blank">Test 404 Route (http://localhost:3000/random)</a></li>
-    </ul>
+        <section id="a2">
+            <h2>Assignment 2: Node.js HTTP Servers</h2>
+            <p>Start one server at a time on port 3000, then open the links.</p>
+            <pre class="run">node "Assignment 2/basicServer.js"</pre>
 
-    <h3>4. Route Handling Server (routeHandlingServer.js)</h3>
-    <ul>
-        <li><a href="http://localhost:3000/" target="_blank">Home (/)</a></li>
-        <li><a href="http://localhost:3000/about" target="_blank">About (/about)</a></li>
-        <li><a href="http://localhost:3000/contact" target="_blank">Contact (/contact)</a></li>
-        <li><a href="http://localhost:3000/services" target="_blank">Services (/services)</a></li>
-        <li><a href="http://localhost:3000/invalid" target="_blank">Invalid Route 404 (/invalid)</a></li>
-    </ul>
+            <h3>1. Basic HTTP Server (basicServer.js)</h3>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Welcome route (/)</a></li>
+            </ul>
 
-    <h3>5. Personal Portfolio Server (personalPortfolioServer.js)</h3>
-    <ul>
-        <li><a href="http://localhost:3000/" target="_blank">Home (/)</a></li>
-        <li><a href="http://localhost:3000/about" target="_blank">About Me (/about)</a></li>
-        <li><a href="http://localhost:3000/skills" target="_blank">Skills (/skills)</a></li>
-        <li><a href="http://localhost:3000/projects" target="_blank">Projects (/projects)</a></li>
-        <li><a href="http://localhost:3000/contact" target="_blank">Contact (/contact)</a></li>
-        <li><a href="http://localhost:3000/missing-page" target="_blank">Missing Page 404 (/missing-page)</a></li>
-    </ul>
+            <h3>2. HTML Response Server (htmlServer.js)</h3>
+            <pre class="run">node "Assignment 2/htmlServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">HTML page (/)</a></li>
+            </ul>
 
-    <hr>
+            <h3>3. Student JSON API (studentJsonApi.js)</h3>
+            <pre class="run">node "Assignment 2/studentJsonApi.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/student" target="_blank" rel="noopener">JSON API (/student)</a></li>
+                <li><a href="http://localhost:3000/random" target="_blank" rel="noopener">404 route (/random)</a></li>
+            </ul>
 
-    <h2>Assignment 3: Your First Node.js Program & Introduction Program</h2>
-    <p>Run these programs in your terminal to see the output:</p>
+            <h3>4. Route Handling Server (routeHandlingServer.js)</h3>
+            <pre class="run">node "Assignment 2/routeHandlingServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
+                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About (/about)</a></li>
+                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
+                <li><a href="http://localhost:3000/services" target="_blank" rel="noopener">Services (/services)</a></li>
+                <li><a href="http://localhost:3000/invalid" target="_blank" rel="noopener">Invalid route 404 (/invalid)</a></li>
+            </ul>
 
-    <h3>Task 1: First Node.js Program (app.js)</h3>
-    <p>Command: <code>node "Assignment 3/app.js"</code></p>
-    <button onclick="runApp()">Run app.js (Demo)</button>
-    <pre id="app-output"></pre>
+            <h3>5. Personal Portfolio Server (personalPortfolioServer.js)</h3>
+            <pre class="run">node "Assignment 2/personalPortfolioServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
+                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About Me (/about)</a></li>
+                <li><a href="http://localhost:3000/skills" target="_blank" rel="noopener">Skills (/skills)</a></li>
+                <li><a href="http://localhost:3000/projects" target="_blank" rel="noopener">Projects (/projects)</a></li>
+                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
+                <li><a href="http://localhost:3000/missing-page" target="_blank" rel="noopener">Missing page 404</a></li>
+            </ul>
+        </section>
 
-    <h3>Task 2: Introduction Program (introduction.js)</h3>
-    <p>Command: <code>node "Assignment 3/introduction.js"</code></p>
-    <button onclick="runIntro()">Run introduction.js (Demo)</button>
-    <pre id="intro-output"></pre>
+        <section id="a3">
+            <h2>Assignment 3: First Node.js Program</h2>
+            <p>Run these in the terminal, or use the demo buttons to preview the console output here.</p>
+
+            <h3>Task 1: app.js</h3>
+            <pre class="run">node "Assignment 3/app.js"</pre>
+            <button type="button" onclick="runApp()">Run app.js (Demo)</button>
+            <pre id="app-output" class="out">Output will appear here.</pre>
+
+            <h3>Task 2: introduction.js</h3>
+            <pre class="run">node "Assignment 3/introduction.js"</pre>
+            <button type="button" onclick="runIntro()">Run introduction.js (Demo)</button>
+            <pre id="intro-output" class="out">Output will appear here.</pre>
+
+            <div class="shots">
+                <figure>
+                    <img src="Assignment 3/Screenshorts/node_version.png" alt="Terminal showing Node.js version">
+                    <figcaption>Node.js version</figcaption>
+                </figure>
+                <figure>
+                    <img src="Assignment 3/Screenshorts/node_app.png" alt="Terminal output of app.js">
+                    <figcaption>app.js output</figcaption>
+                </figure>
+                <figure>
+                    <img src="Assignment 3/Screenshorts/node_introduction.png" alt="Terminal output of introduction.js">
+                    <figcaption>introduction.js output</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section id="a4">
+            <h2>Assignment 4: File System Operations CLI</h2>
+            <p>This assignment is a menu-driven terminal app. It cannot run inside the browser.</p>
+            <pre class="run">cd "Assignment 4"
+node index.js</pre>
+            <p>Menu options:</p>
+            <ol>
+                <li>Create Student File (student.txt)</li>
+                <li>Read a File</li>
+                <li>Add/Append User(s) to File</li>
+                <li>Rename a File</li>
+                <li>Clear File Content</li>
+                <li>Delete a File</li>
+                <li>Exit</li>
+            </ol>
+        </section>
+
+        <section id="a5">
+            <h2>Assignment 5: Express.js Basic Routes</h2>
+            <pre class="run">cd "Assignment 5"
+npm start</pre>
+            <p class="note">Start this server, then use the testers. Expected responses match the assignment routes.</p>
+
+            <h3>Task 1: Basic routes</h3>
+            <div class="row">
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/')">GET /</button>
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/about')">GET /about</button>
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/contact')">GET /contact</button>
+                <a class="btn secondary" href="http://localhost:3000/" target="_blank" rel="noopener">Open in browser</a>
+            </div>
+
+            <h3>Task 2: Route parameter</h3>
+            <div class="row">
+                <label for="a5-name">Name</label>
+                <input type="text" id="a5-name" value="john">
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/user/' + encodeURIComponent(document.getElementById('a5-name').value))">GET /user/:name</button>
+            </div>
+
+            <h3>Task 3: Multiple route parameters</h3>
+            <div class="row">
+                <label for="a5-id">ID</label>
+                <input type="text" id="a5-id" value="101">
+                <label for="a5-cat">Category</label>
+                <input type="text" id="a5-cat" value="electronics">
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/product/' + encodeURIComponent(document.getElementById('a5-id').value) + '/' + encodeURIComponent(document.getElementById('a5-cat').value))">GET /product/:id/:category</button>
+            </div>
+
+            <h3>Task 4: Query parameters</h3>
+            <div class="row">
+                <label for="a5-qname">name</label>
+                <input type="text" id="a5-qname" value="john">
+                <label for="a5-role">role</label>
+                <input type="text" id="a5-role" value="developer">
+                <button type="button" onclick="callRoute('a5-out', 'http://localhost:3000/search?name=' + encodeURIComponent(document.getElementById('a5-qname').value) + '&role=' + encodeURIComponent(document.getElementById('a5-role').value))">GET /search</button>
+            </div>
+            <pre id="a5-out" class="out">Response will appear here.</pre>
+        </section>
+
+        <section id="a6">
+            <h2>Assignment 6: Express.js Middleware</h2>
+            <p>Run one task at a time. Watch the terminal for logger output.</p>
+            <pre class="run">cd "Assignment 6"
+npm run task1
+npm run task2
+npm run task3</pre>
+
+            <h3>Task 1: Router-level middleware</h3>
+            <div class="row">
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/api/students')">GET /api/students</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/api/courses')">GET /api/courses</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/api/faculty')">GET /api/faculty</button>
+            </div>
+
+            <h3>Task 2: Request logger</h3>
+            <div class="row">
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/')">GET /</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/about')">GET /about</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/contact')">GET /contact</button>
+            </div>
+
+            <h3>Task 3: Response time logger</h3>
+            <div class="row">
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/')">GET /</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/products')">GET /products</button>
+                <button type="button" onclick="callRoute('a6-out', 'http://localhost:3000/users')">GET /users</button>
+            </div>
+            <pre id="a6-out" class="out">Response will appear here.</pre>
+        </section>
+
+        <section id="a7">
+            <h2>Assignment 7: Route Parameters &amp; Query Parameters</h2>
+            <pre class="run">cd "Assignment 7"
+npm run task1
+npm run task2
+npm run task3</pre>
+
+            <h3>Task 1: Route parameters</h3>
+            <div class="row">
+                <label for="a7-id">Student ID</label>
+                <input type="text" id="a7-id" value="101">
+                <button type="button" onclick="callRoute('a7-out', 'http://localhost:3000/student/' + encodeURIComponent(document.getElementById('a7-id').value))">GET /student/:id</button>
+            </div>
+
+            <h3>Task 2: Query parameters</h3>
+            <div class="row">
+                <label for="a7-name">name</label>
+                <input type="text" id="a7-name" value="Ricky">
+                <label for="a7-course">course</label>
+                <input type="text" id="a7-course" value="Node.js">
+                <button type="button" onclick="callRoute('a7-out', 'http://localhost:3000/search?name=' + encodeURIComponent(document.getElementById('a7-name').value) + '&course=' + encodeURIComponent(document.getElementById('a7-course').value))">GET /search with params</button>
+                <button type="button" class="secondary" onclick="callRoute('a7-out', 'http://localhost:3000/search')">GET /search (empty)</button>
+            </div>
+
+            <h3>Task 3: Student profile</h3>
+            <div class="row">
+                <label for="a7-pid">ID</label>
+                <input type="text" id="a7-pid" value="101">
+                <label for="a7-pname">name</label>
+                <input type="text" id="a7-pname" value="John">
+                <label for="a7-pcourse">course</label>
+                <input type="text" id="a7-pcourse" value="FullStack">
+                <button type="button" onclick="callRoute('a7-out', 'http://localhost:3000/student/' + encodeURIComponent(document.getElementById('a7-pid').value) + '?name=' + encodeURIComponent(document.getElementById('a7-pname').value) + '&course=' + encodeURIComponent(document.getElementById('a7-pcourse').value))">GET /student/:id with query</button>
+            </div>
+            <pre id="a7-out" class="out">Response will appear here.</pre>
+        </section>
+
+        <section id="a8">
+            <h2>Assignment 8: Create and Retrieve Users</h2>
+            <p>MongoDB must be running. Schema, model, and router stay in separate files.</p>
+            <pre class="run">cd "Assignment 8"
+npm start</pre>
+
+            <h3>POST /api/users</h3>
+            <div class="row">
+                <label for="a8-name">Name</label>
+                <input type="text" id="a8-name" value="Rahul">
+                <label for="a8-email">Email</label>
+                <input type="email" id="a8-email" value="rahul@gmail.com">
+                <label for="a8-age">Age</label>
+                <input type="number" id="a8-age" value="22">
+                <label for="a8-course">Course</label>
+                <input type="text" id="a8-course" value="MCA">
+                <button type="button" onclick="createUser('a8-out')">Create User</button>
+            </div>
+
+            <h3>GET /api/users</h3>
+            <button type="button" onclick="listUsers('a8-out')">List Users</button>
+            <pre id="a8-out" class="out">Response will appear here.</pre>
+        </section>
+
+        <section id="a9">
+            <h2>Assignment 9: Update and Delete Users</h2>
+            <p>Extends Assignment 8 with PATCH and DELETE. Create a user first if you need an ID.</p>
+            <pre class="run">cd "Assignment 9"
+npm start</pre>
+
+            <h3>Create a user (POST)</h3>
+            <div class="row">
+                <label for="a9-name">Name</label>
+                <input type="text" id="a9-name" value="Rahul">
+                <label for="a9-email">Email</label>
+                <input type="email" id="a9-email" value="rahul@gmail.com">
+                <label for="a9-age">Age</label>
+                <input type="number" id="a9-age" value="22">
+                <label for="a9-course">Course</label>
+                <input type="text" id="a9-course" value="MCA">
+                <button type="button" onclick="createUser('a9-out', true)">Create User</button>
+                <button type="button" class="secondary" onclick="listUsers('a9-out')">List Users</button>
+            </div>
+
+            <h3>PATCH /api/users/:id</h3>
+            <div class="row">
+                <label for="a9-id">User ID</label>
+                <input type="text" id="a9-id" placeholder="MongoDB document id" style="min-width: 260px;">
+                <label for="a9-new-age">New age</label>
+                <input type="number" id="a9-new-age" value="23">
+                <label for="a9-new-course">New course</label>
+                <input type="text" id="a9-new-course" value="MCA">
+                <button type="button" onclick="updateUser()">Update User</button>
+                <button type="button" class="danger" onclick="deleteUser()">Delete User</button>
+            </div>
+            <p class="muted">Error cases: invalid ID returns 400, missing user returns 404.</p>
+            <pre id="a9-out" class="out">Response will appear here.</pre>
+        </section>
+    </main>
 
     <script>
         let codingAverage = null;
@@ -112,26 +592,30 @@
             const resultBox = document.getElementById('c-result');
 
             if (marks.length === 0) {
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Error: Enter valid marks!';
                 return;
             }
 
+            resultBox.className = 'result';
             resultBox.innerText = 'Processing coding check... (2 seconds delay)';
 
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     const avg = marks.reduce((sum, m) => sum + m, 0) / marks.length;
                     if (avg >= cutoffVal) resolve(avg);
-                    else reject("Sorry, you have not cleared the Coding Assessment.");
+                    else reject('Sorry, you have not cleared the Coding Assessment.');
                 }, 2000);
             })
             .then(avg => {
                 codingAverage = avg;
+                resultBox.className = 'result ok';
                 resultBox.innerText = 'Coding Assessment cleared! Average score: ' + avg.toFixed(2);
                 document.getElementById('summary-coding').innerText = avg.toFixed(2);
             })
             .catch(err => {
                 codingAverage = null;
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Rejected: ' + err;
                 document.getElementById('summary-coding').innerText = 'Not completed';
             });
@@ -144,26 +628,30 @@
             const resultBox = document.getElementById('t-result');
 
             if (marks.length === 0) {
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Error: Enter valid marks!';
                 return;
             }
 
+            resultBox.className = 'result';
             resultBox.innerText = 'Processing technical interview check... (2 seconds delay)';
 
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     const avg = marks.reduce((sum, m) => sum + m, 0) / marks.length;
                     if (avg >= cutoffVal) resolve(avg);
-                    else reject("Sorry, you have not cleared the Technical Interview.");
+                    else reject('Sorry, you have not cleared the Technical Interview.');
                 }, 2000);
             })
             .then(avg => {
                 technicalAverage = avg;
+                resultBox.className = 'result ok';
                 resultBox.innerText = 'Technical Interview cleared! Average score: ' + avg.toFixed(2);
                 document.getElementById('summary-technical').innerText = avg.toFixed(2);
             })
             .catch(err => {
                 technicalAverage = null;
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Rejected: ' + err;
                 document.getElementById('summary-technical').innerText = 'Not completed';
             });
@@ -174,23 +662,27 @@
             const cutoffVal = parseFloat(document.getElementById('f-cutoff').value);
 
             if (codingAverage === null || technicalAverage === null) {
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Error: Complete both Coding Assessment and Technical Interview first!';
                 return;
             }
 
+            resultBox.className = 'result';
             resultBox.innerText = 'Processing final selection review... (2 seconds delay)';
 
             new Promise((resolve, reject) => {
                 setTimeout(() => {
                     const finalAvg = (codingAverage + technicalAverage) / 2;
                     if (finalAvg >= cutoffVal) resolve(finalAvg);
-                    else reject("Sorry, you have not cleared the final selection cutoff.");
+                    else reject('Sorry, you have not cleared the final selection cutoff.');
                 }, 2000);
             })
             .then(finalAvg => {
+                resultBox.className = 'result ok';
                 resultBox.innerText = 'Final Selection cleared! Final average score: ' + finalAvg.toFixed(2);
             })
             .catch(err => {
+                resultBox.className = 'result err';
                 resultBox.innerText = 'Rejected: ' + err;
             });
         }
@@ -203,6 +695,9 @@
             document.getElementById('c-result').innerText = '';
             document.getElementById('t-result').innerText = '';
             document.getElementById('f-result').innerText = '';
+            document.getElementById('c-result').className = 'result';
+            document.getElementById('t-result').className = 'result';
+            document.getElementById('f-result').className = 'result';
         }
 
         function runApp() {
@@ -211,6 +706,97 @@
 
         function runIntro() {
             document.getElementById('intro-output').innerText = 'Name: John\nEducation: B.Tech\nCurrent Learning: Node.js\nGoal: Developer';
+        }
+
+        async function callRoute(outputId, url) {
+            const box = document.getElementById(outputId);
+            box.textContent = 'Requesting ' + url + ' ...';
+            try {
+                const res = await fetch(url);
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart the matching assignment server on port 3000 first.\n\n' + err.message;
+            }
+        }
+
+        function userPayload(prefix) {
+            return {
+                name: document.getElementById(prefix + '-name').value,
+                email: document.getElementById(prefix + '-email').value,
+                age: Number(document.getElementById(prefix + '-age').value),
+                course: document.getElementById(prefix + '-course').value
+            };
+        }
+
+        async function createUser(outputId, fillId) {
+            const box = document.getElementById(outputId);
+            const prefix = outputId === 'a9-out' ? 'a9' : 'a8';
+            box.textContent = 'Creating user...';
+            try {
+                const res = await fetch('http://localhost:3000/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userPayload(prefix))
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+                if (fillId) {
+                    const data = JSON.parse(text);
+                    if (data.user && data.user._id) {
+                        document.getElementById('a9-id').value = data.user._id;
+                    }
+                }
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 8 or 9 with npm start.\n\n' + err.message;
+            }
+        }
+
+        async function listUsers(outputId) {
+            const box = document.getElementById(outputId);
+            box.textContent = 'Loading users...';
+            try {
+                const res = await fetch('http://localhost:3000/api/users');
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 8 or 9 with npm start.\n\n' + err.message;
+            }
+        }
+
+        async function updateUser() {
+            const box = document.getElementById('a9-out');
+            const id = document.getElementById('a9-id').value.trim();
+            box.textContent = 'Updating user...';
+            try {
+                const res = await fetch('http://localhost:3000/api/users/' + encodeURIComponent(id), {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        age: Number(document.getElementById('a9-new-age').value),
+                        course: document.getElementById('a9-new-course').value
+                    })
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 9 with npm start.\n\n' + err.message;
+            }
+        }
+
+        async function deleteUser() {
+            const box = document.getElementById('a9-out');
+            const id = document.getElementById('a9-id').value.trim();
+            box.textContent = 'Deleting user...';
+            try {
+                const res = await fetch('http://localhost:3000/api/users/' + encodeURIComponent(id), {
+                    method: 'DELETE'
+                });
+                const text = await res.text();
+                box.textContent = res.status + ' ' + res.statusText + '\n' + text;
+            } catch (err) {
+                box.textContent = 'Could not reach the server.\nStart Assignment 9 with npm start.\n\n' + err.message;
+            }
         }
     </script>
 </body>

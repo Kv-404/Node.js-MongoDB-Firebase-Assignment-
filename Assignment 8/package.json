@@ -1,0 +1,17 @@
+{
+  "name": "assignment-8",
+  "version": "1.0.0",
+  "description": "Assignment 8 - Create and retrieve users using Express, MongoDB and Mongoose",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["express", "mongodb", "mongoose"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.8.3"
+  }
+}

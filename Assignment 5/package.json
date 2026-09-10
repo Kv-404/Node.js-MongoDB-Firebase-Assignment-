@@ -1,0 +1,16 @@
+{
+  "name": "express-basics-assignment",
+  "version": "1.0.0",
+  "description": "Assignment 5 - Express.js basic routes, route parameters and query parameters",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["express", "routes"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
