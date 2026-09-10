@@ -11,19 +11,19 @@ Open `index.html` in your browser for the coursework portal. It has a section fo
 ### [Assignment 1](Assignment%201) - Promises (Recruitment System)
 Focuses on asynchronous JavaScript using Promises. It simulates a recruitment system with coding and technical interview checks.
 
-### [Assignment 2](Assignment%202) - Node.js HTTP Servers
+### [Assignment 2](Assignment%202) - Node.js Basics
+Introduction to Node.js, running simple scripts like displaying messages and personal introductions in the console.
+
+### [Assignment 3](Assignment%203) - File System Operations CLI
+An interactive Command Line Interface (CLI) application demonstrating the use of the core Node.js `fs` module to perform file operations (create, read, append, rename, clear, delete) dynamically.
+
+### [Assignment 4](Assignment%204) - Node.js HTTP Servers
 Covers building basic HTTP servers using Node.js's core `http` module. It includes:
 - Basic HTTP server
 - HTML response server
 - JSON API server
 - Route handling server
 - Personal portfolio server
-
-### [Assignment 3](Assignment%203) - Node.js Basics
-Introduction to Node.js, running simple scripts like displaying messages and personal introductions in the console.
-
-### [Assignment 4](Assignment%204) - File System Operations CLI
-An interactive Command Line Interface (CLI) application demonstrating the use of the core Node.js `fs` module to perform file operations (create, read, append, rename, clear, delete) dynamically.
 
 ### [Assignment 5](Assignment%205) - Express.js Basic Routes
 Express server covering basic routes, dynamic route parameters, query parameters, and request logging.

@@ -261,16 +261,16 @@
     <header>
         <div class="wrap">
             <h1>Node.js, MongoDB &amp; Firebase Coursework Portal</h1>
-            <p>Test page for Assignments 1–11. Assignment 1 and 3 run in the browser. For servers, start the matching Node process first, then use the links or testers below.</p>
+            <p>Test page for Assignments 1–11. Assignment 1 and 2 run in the browser. For servers, start the matching Node process first, then use the links or testers below.</p>
         </div>
     </header>
 
     <nav aria-label="Assignments">
         <div class="wrap">
             <a href="#a1">1. Promises</a>
-            <a href="#a2">2. HTTP Servers</a>
-            <a href="#a3">3. Node Basics</a>
-            <a href="#a4">4. File System</a>
+            <a href="#a2">2. Node Basics</a>
+            <a href="#a3">3. File System</a>
+            <a href="#a4">4. HTTP Servers</a>
             <a href="#a5">5. Express Routes</a>
             <a href="#a6">6. Middleware</a>
             <a href="#a7">7. Params</a>
@@ -319,84 +319,39 @@
         </section>
 
         <section id="a2">
-            <h2>Assignment 2: Node.js HTTP Servers</h2>
-            <p>Start one server at a time on port 3000, then open the links.</p>
-            <pre class="run">node "Assignment 2/basicServer.js"</pre>
-
-            <h3>1. Basic HTTP Server (basicServer.js)</h3>
-            <ul class="links">
-                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Welcome route (/)</a></li>
-            </ul>
-
-            <h3>2. HTML Response Server (htmlServer.js)</h3>
-            <pre class="run">node "Assignment 2/htmlServer.js"</pre>
-            <ul class="links">
-                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">HTML page (/)</a></li>
-            </ul>
-
-            <h3>3. Student JSON API (studentJsonApi.js)</h3>
-            <pre class="run">node "Assignment 2/studentJsonApi.js"</pre>
-            <ul class="links">
-                <li><a href="http://localhost:3000/student" target="_blank" rel="noopener">JSON API (/student)</a></li>
-                <li><a href="http://localhost:3000/random" target="_blank" rel="noopener">404 route (/random)</a></li>
-            </ul>
-
-            <h3>4. Route Handling Server (routeHandlingServer.js)</h3>
-            <pre class="run">node "Assignment 2/routeHandlingServer.js"</pre>
-            <ul class="links">
-                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
-                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About (/about)</a></li>
-                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
-                <li><a href="http://localhost:3000/services" target="_blank" rel="noopener">Services (/services)</a></li>
-                <li><a href="http://localhost:3000/invalid" target="_blank" rel="noopener">Invalid route 404 (/invalid)</a></li>
-            </ul>
-
-            <h3>5. Personal Portfolio Server (personalPortfolioServer.js)</h3>
-            <pre class="run">node "Assignment 2/personalPortfolioServer.js"</pre>
-            <ul class="links">
-                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
-                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About Me (/about)</a></li>
-                <li><a href="http://localhost:3000/skills" target="_blank" rel="noopener">Skills (/skills)</a></li>
-                <li><a href="http://localhost:3000/projects" target="_blank" rel="noopener">Projects (/projects)</a></li>
-                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
-                <li><a href="http://localhost:3000/missing-page" target="_blank" rel="noopener">Missing page 404</a></li>
-            </ul>
-        </section>
-
-        <section id="a3">
-            <h2>Assignment 3: First Node.js Program</h2>
+            <h2>Assignment 2: First Node.js Program</h2>
             <p>Run these in the terminal, or use the demo buttons to preview the console output here.</p>
 
             <h3>Task 1: app.js</h3>
-            <pre class="run">node "Assignment 3/app.js"</pre>
+            <pre class="run">node "Assignment 2/app.js"</pre>
             <button type="button" onclick="runApp()">Run app.js (Demo)</button>
             <pre id="app-output" class="out">Output will appear here.</pre>
 
             <h3>Task 2: introduction.js</h3>
-            <pre class="run">node "Assignment 3/introduction.js"</pre>
+            <pre class="run">node "Assignment 2/introduction.js"</pre>
             <button type="button" onclick="runIntro()">Run introduction.js (Demo)</button>
             <pre id="intro-output" class="out">Output will appear here.</pre>
 
             <div class="shots">
                 <figure>
-                    <img src="Assignment 3/Screenshorts/node_version.png" alt="Terminal showing Node.js version">
+                    <img src="Assignment 2/Screenshorts/node_version.png" alt="Terminal showing Node.js version">
                     <figcaption>Node.js version</figcaption>
                 </figure>
                 <figure>
-                    <img src="Assignment 3/Screenshorts/node_app.png" alt="Terminal output of app.js">
+                    <img src="Assignment 2/Screenshorts/node_app.png" alt="Terminal output of app.js">
                     <figcaption>app.js output</figcaption>
                 </figure>
                 <figure>
-                    <img src="Assignment 3/Screenshorts/node_introduction.png" alt="Terminal output of introduction.js">
+                    <img src="Assignment 2/Screenshorts/node_introduction.png" alt="Terminal output of introduction.js">
                     <figcaption>introduction.js output</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section id="a4">
-            <h2>Assignment 4: File System Operations CLI</h2>
+        <section id="a3">
+            <h2>Assignment 3: File System Operations CLI</h2>
             <p>This assignment is a menu-driven terminal app. It cannot run inside the browser.</p>
-            <pre class="run">cd "Assignment 4"
+            <pre class="run">cd "Assignment 3"
 node index.js</pre>
             <p>Menu options:</p>
             <ol>
@@ -408,6 +363,51 @@ node index.js</pre>
                 <li>Delete a File</li>
                 <li>Exit</li>
             </ol>
+        </section>
+
+        <section id="a4">
+            <h2>Assignment 4: Node.js HTTP Servers</h2>
+            <p>Start one server at a time on port 3000, then open the links.</p>
+            <pre class="run">node "Assignment 4/basicServer.js"</pre>
+
+            <h3>1. Basic HTTP Server (basicServer.js)</h3>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Welcome route (/)</a></li>
+            </ul>
+
+            <h3>2. HTML Response Server (htmlServer.js)</h3>
+            <pre class="run">node "Assignment 4/htmlServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">HTML page (/)</a></li>
+            </ul>
+
+            <h3>3. Student JSON API (studentJsonApi.js)</h3>
+            <pre class="run">node "Assignment 4/studentJsonApi.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/student" target="_blank" rel="noopener">JSON API (/student)</a></li>
+                <li><a href="http://localhost:3000/random" target="_blank" rel="noopener">404 route (/random)</a></li>
+            </ul>
+
+            <h3>4. Route Handling Server (routeHandlingServer.js)</h3>
+            <pre class="run">node "Assignment 4/routeHandlingServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
+                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About (/about)</a></li>
+                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
+                <li><a href="http://localhost:3000/services" target="_blank" rel="noopener">Services (/services)</a></li>
+                <li><a href="http://localhost:3000/invalid" target="_blank" rel="noopener">Invalid route 404 (/invalid)</a></li>
+            </ul>
+
+            <h3>5. Personal Portfolio Server (personalPortfolioServer.js)</h3>
+            <pre class="run">node "Assignment 4/personalPortfolioServer.js"</pre>
+            <ul class="links">
+                <li><a href="http://localhost:3000/" target="_blank" rel="noopener">Home (/)</a></li>
+                <li><a href="http://localhost:3000/about" target="_blank" rel="noopener">About Me (/about)</a></li>
+                <li><a href="http://localhost:3000/skills" target="_blank" rel="noopener">Skills (/skills)</a></li>
+                <li><a href="http://localhost:3000/projects" target="_blank" rel="noopener">Projects (/projects)</a></li>
+                <li><a href="http://localhost:3000/contact" target="_blank" rel="noopener">Contact (/contact)</a></li>
+                <li><a href="http://localhost:3000/missing-page" target="_blank" rel="noopener">Missing page 404</a></li>
+            </ul>
         </section>
 
         <section id="a5">
